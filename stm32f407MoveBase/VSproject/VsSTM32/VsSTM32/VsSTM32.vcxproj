@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\CMSIS\Include\arm_common_tables.h" />
+    <ClInclude Include="..\..\..\CMSIS\Include\arm_const_structs.h" />
+    <ClInclude Include="..\..\..\CMSIS\Include\arm_math.h" />
+    <ClInclude Include="..\..\..\CMSIS\Include\core_cm0.h" />
+    <ClInclude Include="..\..\..\CMSIS\Include\core_cm0plus.h" />
+    <ClInclude Include="..\..\..\CMSIS\Include\core_cm3.h" />
+    <ClInclude Include="..\..\..\CMSIS\Include\core_cm4.h" />
+    <ClInclude Include="..\..\..\CMSIS\Include\core_cm7.h" />
+    <ClInclude Include="..\..\..\CMSIS\Include\core_cmFunc.h" />
+    <ClInclude Include="..\..\..\CMSIS\Include\core_cmInstr.h" />
+    <ClInclude Include="..\..\..\CMSIS\Include\core_cmSimd.h" />
+    <ClInclude Include="..\..\..\CMSIS\Include\core_sc000.h" />
+    <ClInclude Include="..\..\..\CMSIS\Include\core_sc300.h" />
+    <ClInclude Include="..\..\..\Config\commen.h" />
+    <ClInclude Include="..\..\..\Config\config.h" />
+    <ClInclude Include="..\..\..\Config\delay.h" />
+    <ClInclude Include="..\..\..\Config\spi.h" />
+    <ClInclude Include="..\..\..\Config\stmflash.h" />
+    <ClInclude Include="..\..\..\LIB\inc\misc.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_adc.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_can.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_cec.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_crc.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_cryp.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_dac.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_dbgmcu.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_dcmi.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_dfsdm.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_dma.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_dma2d.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_dsi.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_exti.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_flash.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_flash_ramfunc.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_fmc.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_fmpi2c.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_fsmc.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_gpio.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_hash.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_i2c.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_iwdg.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_lptim.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_ltdc.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_pwr.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_qspi.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_rcc.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_rng.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_rtc.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_sai.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_sdio.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_spdifrx.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_spi.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_syscfg.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_tim.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_usart.h" />
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_wwdg.h" />
+    <ClInclude Include="..\..\..\Move\AutomaticCharge.h" />
+    <ClInclude Include="..\..\..\Move\DS18B20.h" />
+    <ClInclude Include="..\..\..\Move\Elevator.h" />
+    <ClInclude Include="..\..\..\Move\I2C.h" />
+    <ClInclude Include="..\..\..\Move\IRreceive.h" />
+    <ClInclude Include="..\..\..\Move\LED.h" />
+    <ClInclude Include="..\..\..\Move\MotorDC.h" />
+    <ClInclude Include="..\..\..\Move\Move2.h" />
+    <ClInclude Include="..\..\..\Move\Move4.h" />
+    <ClInclude Include="..\..\..\Move\MoveBase.h" />
+    <ClInclude Include="..\..\..\Move\OBD.h" />
+    <ClInclude Include="..\..\..\Move\ODO2PG.h" />
+    <ClInclude Include="..\..\..\Move\Sonar.h" />
+    <ClInclude Include="..\..\..\Move\Voltage.h" />
+    <ClInclude Include="..\..\..\SerialRead\cmd.h" />
+    <ClInclude Include="..\..\..\SerialRead\ICmd.h" />
+    <ClInclude Include="..\..\..\SerialRead\SerialBuf.h" />
+    <ClInclude Include="..\..\..\SerialRead\SerialCom.h" />
+    <ClInclude Include="..\..\..\USER\Include\stm32f4xx.h" />
+    <ClInclude Include="..\..\..\USER\Include\stm32f4xx_conf.h" />
+    <ClInclude Include="..\..\..\USER\Include\stm32f4xx_it.h" />
+    <ClInclude Include="..\..\..\USER\Include\system_stm32f4xx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Config\commen.c" />
+    <ClCompile Include="..\..\..\Config\config.c" />
+    <ClCompile Include="..\..\..\Config\delay.c" />
+    <ClCompile Include="..\..\..\Config\spi.c" />
+    <ClCompile Include="..\..\..\Config\stmflash.c" />
+    <ClCompile Include="..\..\..\LIB\src\misc.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_adc.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_can.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_cec.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_crc.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_cryp.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_cryp_aes.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_cryp_des.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_cryp_tdes.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_dac.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_dbgmcu.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_dcmi.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_dfsdm.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_dma.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_dma2d.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_dsi.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_exti.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_flash.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_flash_ramfunc.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_fmc.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_fmpi2c.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_fsmc.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_gpio.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_hash.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_hash_md5.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_hash_sha1.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_i2c.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_iwdg.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_lptim.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_ltdc.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_pwr.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_qspi.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_rcc.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_rng.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_rtc.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_sai.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_sdio.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_spdifrx.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_spi.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_syscfg.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_tim.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_usart.c" />
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_wwdg.c" />
+    <ClCompile Include="..\..\..\Move\AutomaticCharge.c" />
+    <ClCompile Include="..\..\..\Move\DS18B20.c" />
+    <ClCompile Include="..\..\..\Move\Elevator.c" />
+    <ClCompile Include="..\..\..\Move\I2C.c" />
+    <ClCompile Include="..\..\..\Move\IRreceive.c" />
+    <ClCompile Include="..\..\..\Move\LED.c" />
+    <ClCompile Include="..\..\..\Move\MotorDC.c" />
+    <ClCompile Include="..\..\..\Move\Move2.c" />
+    <ClCompile Include="..\..\..\Move\Move4.c" />
+    <ClCompile Include="..\..\..\Move\MoveBase.c" />
+    <ClCompile Include="..\..\..\Move\OBD.c" />
+    <ClCompile Include="..\..\..\Move\ODO2PG.c" />
+    <ClCompile Include="..\..\..\Move\Sonar.c" />
+    <ClCompile Include="..\..\..\Move\Voltage.c" />
+    <ClCompile Include="..\..\..\SerialRead\cmd.c" />
+    <ClCompile Include="..\..\..\SerialRead\SerialBuf.c" />
+    <ClCompile Include="..\..\..\SerialRead\SerialCom.c" />
+    <ClCompile Include="..\..\..\USER\source\app.c" />
+    <ClCompile Include="..\..\..\USER\source\stm32f4xx_it.c" />
+    <ClCompile Include="..\..\..\USER\source\system_stm32f4xx.c" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{BA278AE7-6527-4097-845A-5ABB363CBAD2}</ProjectGuid>
+    <RootNamespace>VsSTM32</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\..\..\CMSIS\Include;..\..\..\USER;..\..\..\MPU6050;..\..\..\Move;..\..\..\USER\Include;..\..\..\Config;..\..\..\LIB\inc;..\..\..\SerialRead;..\..\..\DW1000;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>STM32F40_41xxx;USE_STDPERIPH_DRIVER;__FPU_USED;__FPU_PRESENT;ARM_MATH_CM4;__CC_ARM;ARM_MATH_MATRIX_CHECK;ARM_MATH_ROUNDING;_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

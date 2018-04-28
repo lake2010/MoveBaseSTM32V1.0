@@ -1,0 +1,495 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="源文件\CMSIS">
+      <UniqueIdentifier>{63eb9ff3-f7fd-4d47-9427-c9193f5e00eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Config">
+      <UniqueIdentifier>{5149e131-b8de-4443-ba1b-a30b514ed779}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\LIB">
+      <UniqueIdentifier>{dcdaf7c1-c6b0-4614-bb9a-d5256ff48fde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\SerialRead">
+      <UniqueIdentifier>{bb5fce05-0656-48a4-881e-8287be8cedbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\CMSIS">
+      <UniqueIdentifier>{d96abd76-24bc-4092-94c8-32515158dcb8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Config">
+      <UniqueIdentifier>{d7ad9f97-bfa9-470d-b90f-5d163b618a87}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\LIB">
+      <UniqueIdentifier>{dc3a5c3d-836c-466e-8297-1bf281433829}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\USER">
+      <UniqueIdentifier>{950f7da8-5724-4f02-b808-2e04ff07a487}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\SerialRead">
+      <UniqueIdentifier>{cb192252-7f8e-4512-8077-e5552cc1c189}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\USER">
+      <UniqueIdentifier>{efe9fd09-6b5c-483d-a077-9d57f88f9e0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Move">
+      <UniqueIdentifier>{7051d63f-b575-4a52-85b5-7ec1925ec4eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Move">
+      <UniqueIdentifier>{757f0091-fc35-4f28-80e9-db5034537a0a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\CMSIS\Include\arm_common_tables.h">
+      <Filter>头文件\CMSIS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CMSIS\Include\arm_const_structs.h">
+      <Filter>头文件\CMSIS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CMSIS\Include\arm_math.h">
+      <Filter>头文件\CMSIS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CMSIS\Include\core_cm0.h">
+      <Filter>头文件\CMSIS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CMSIS\Include\core_cm0plus.h">
+      <Filter>头文件\CMSIS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CMSIS\Include\core_cm3.h">
+      <Filter>头文件\CMSIS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CMSIS\Include\core_cm4.h">
+      <Filter>头文件\CMSIS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CMSIS\Include\core_cm7.h">
+      <Filter>头文件\CMSIS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CMSIS\Include\core_cmFunc.h">
+      <Filter>头文件\CMSIS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CMSIS\Include\core_cmInstr.h">
+      <Filter>头文件\CMSIS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CMSIS\Include\core_cmSimd.h">
+      <Filter>头文件\CMSIS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CMSIS\Include\core_sc000.h">
+      <Filter>头文件\CMSIS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\CMSIS\Include\core_sc300.h">
+      <Filter>头文件\CMSIS</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Config\commen.h">
+      <Filter>头文件\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Config\config.h">
+      <Filter>头文件\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Config\delay.h">
+      <Filter>头文件\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Config\spi.h">
+      <Filter>头文件\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Config\stmflash.h">
+      <Filter>头文件\Config</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\misc.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_adc.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_can.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_cec.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_crc.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_cryp.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_dac.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_dbgmcu.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_dcmi.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_dfsdm.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_dma.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_dma2d.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_dsi.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_exti.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_flash.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_flash_ramfunc.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_fmc.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_fmpi2c.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_fsmc.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_gpio.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_hash.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_i2c.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_iwdg.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_lptim.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_ltdc.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_pwr.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_qspi.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_rcc.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_rng.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_rtc.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_sai.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_sdio.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_spdifrx.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_spi.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_syscfg.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_tim.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_usart.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\LIB\inc\stm32f4xx_wwdg.h">
+      <Filter>头文件\LIB</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SerialRead\cmd.h">
+      <Filter>头文件\SerialRead</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SerialRead\ICmd.h">
+      <Filter>头文件\SerialRead</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SerialRead\SerialBuf.h">
+      <Filter>头文件\SerialRead</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\SerialRead\SerialCom.h">
+      <Filter>头文件\SerialRead</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\USER\Include\stm32f4xx.h">
+      <Filter>头文件\USER</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\USER\Include\stm32f4xx_conf.h">
+      <Filter>头文件\USER</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\USER\Include\stm32f4xx_it.h">
+      <Filter>头文件\USER</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\USER\Include\system_stm32f4xx.h">
+      <Filter>头文件\USER</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Move\MotorDC.h">
+      <Filter>头文件\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Move\Move2.h">
+      <Filter>头文件\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Move\Move4.h">
+      <Filter>头文件\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Move\MoveBase.h">
+      <Filter>头文件\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Move\ODO2PG.h">
+      <Filter>头文件\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Move\IRreceive.h">
+      <Filter>头文件\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Move\AutomaticCharge.h">
+      <Filter>头文件\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Move\I2C.h">
+      <Filter>头文件\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Move\Sonar.h">
+      <Filter>头文件\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Move\DS18B20.h">
+      <Filter>头文件\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Move\OBD.h">
+      <Filter>头文件\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Move\Voltage.h">
+      <Filter>头文件\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Move\LED.h">
+      <Filter>头文件\Move</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Move\Elevator.h">
+      <Filter>头文件\Move</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Config\commen.c">
+      <Filter>源文件\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Config\config.c">
+      <Filter>源文件\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Config\delay.c">
+      <Filter>源文件\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Config\spi.c">
+      <Filter>源文件\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Config\stmflash.c">
+      <Filter>源文件\Config</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\misc.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_adc.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_can.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_cec.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_crc.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_cryp.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_cryp_aes.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_cryp_des.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_cryp_tdes.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_dac.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_dbgmcu.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_dcmi.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_dfsdm.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_dma.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_dma2d.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_dsi.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_exti.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_flash.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_flash_ramfunc.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_fmc.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_fmpi2c.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_fsmc.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_gpio.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_hash.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_hash_md5.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_hash_sha1.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_i2c.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_iwdg.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_lptim.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_ltdc.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_pwr.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_qspi.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_rcc.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_rng.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_rtc.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_sai.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_sdio.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_spdifrx.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_spi.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_syscfg.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_tim.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_usart.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\LIB\src\stm32f4xx_wwdg.c">
+      <Filter>源文件\LIB</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\SerialRead\cmd.c">
+      <Filter>源文件\SerialRead</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\SerialRead\SerialBuf.c">
+      <Filter>源文件\SerialRead</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\SerialRead\SerialCom.c">
+      <Filter>源文件\SerialRead</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\USER\source\app.c">
+      <Filter>源文件\USER</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\USER\source\stm32f4xx_it.c">
+      <Filter>源文件\USER</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\USER\source\system_stm32f4xx.c">
+      <Filter>源文件\USER</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Move\MotorDC.c">
+      <Filter>源文件\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Move\Move2.c">
+      <Filter>源文件\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Move\Move4.c">
+      <Filter>源文件\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Move\MoveBase.c">
+      <Filter>源文件\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Move\ODO2PG.c">
+      <Filter>源文件\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Move\IRreceive.c">
+      <Filter>源文件\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Move\AutomaticCharge.c">
+      <Filter>源文件\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Move\I2C.c">
+      <Filter>源文件\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Move\Sonar.c">
+      <Filter>源文件\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Move\DS18B20.c">
+      <Filter>源文件\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Move\OBD.c">
+      <Filter>源文件\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Move\Voltage.c">
+      <Filter>源文件\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Move\LED.c">
+      <Filter>源文件\Move</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Move\Elevator.c">
+      <Filter>源文件\Move</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
