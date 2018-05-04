@@ -101,6 +101,7 @@ extern Gpio_pin_parameter m_Elevator_UP_Limit;
 extern Gpio_pin_parameter m_Elevator_DOWN_Limit;
 
 extern Gpio_pin_parameter m_LED_Port;
+extern Gpio_pin_parameter m_B_STOP;
 
 void MoveBasePinDefine(void);
 void pinInputModeInit(Gpio_pin_parameter* Gpio_pin_para);

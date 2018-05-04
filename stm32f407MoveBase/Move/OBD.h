@@ -10,6 +10,7 @@ typedef struct COBD_parameter_all
 	float	m_tmp[m_TemperNum];
 	float	m_voltage;//累计电压
 	float	m_stableVol;
+	int  	m_batteryPercentage;
 	float	m_electricity;
 	u32		m_systemTime;
 	u32		m_volGetTime;

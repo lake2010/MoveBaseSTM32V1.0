@@ -1,5 +1,6 @@
 #include "MoveBase.h"
 #include "commen.h"
+#include "delay.h"
 //#include "ICmd.h"
 //#include "MyCmd.h"
 CMoveBase_parameter MoveBase;
@@ -141,6 +142,7 @@ void CMoveBase_USART4Read(CMoveBase_parameter* CMoveBase_para)
 				CMove2_enableCoff( &CMoveBase_para->m_move, 0 );
 				mySerialWriteUSART3((byte*)buf,len);
 				CMoveBase_para->getCoff_state = 0;
+			  CMove2_start(&CMoveBase_para->m_move);
 				myprintfUSART1("CMD_OP_AC_OFF\r\n");
 				break;
 			default:
@@ -192,12 +194,6 @@ void CMoveBase_USART3Read(CMoveBase_parameter* CMoveBase_para)
 			case CMD_OP_STOP: /* 电机停止运动（电机停止后，保持使能,但可被转动） */	
 				CMove2_stop( &CMoveBase_para->m_move);
 				break;
-			case CMD_OP_AC_ON:
-				CMove2_enableCoff( &CMoveBase_para->m_move, 1 );
-				break;
-			case CMD_OP_AC_OFF:
-				CMove2_enableCoff( &CMoveBase_para->m_move, 0 );
-				break;
 			default:
 				break;
 		}
@@ -232,7 +228,12 @@ void CMoveBase_USART4ReadOff(CMoveBase_parameter* CMoveBase_para)
 				CMove2_enableCoff( &CMoveBase_para->m_move, 0 );
 				CMoveBase_para->getCoff_state = 0;
 				mySerialWriteUSART3((byte*)buf,len);
-			    myprintfUSART1("OFF\r\n");
+			  CMove2_start(&CMoveBase_para->m_move);
+				CMove2_setv( &CMoveBase_para->m_move,100,0,0);	
+			//临时加 后期需要超声波
+				delay(1000);
+			  CMove2_setv( &CMoveBase_para->m_move,0,0,0);	
+			  myprintfUSART1("OFF\r\n");
 				break;
 			default:
 				break;
@@ -254,7 +255,6 @@ void CMoveChargeState_loop(CMoveBase_parameter* CMoveBase_para)
 	}
 	else
 		CMoveBase_USART4Read(CMoveBase_para);
-	
 }
 
 void SYSstatus_setup( SYSstatus_parameter* SYSstatus_para )
@@ -312,7 +312,6 @@ void SYSstatus_loop( SYSstatus_parameter* SYSstatus_para )
 					MoveBase.m_ac.m_chargeState = buf[4];
 					break;
 			}
-			
 		}
 		SYSstatus_printfEncoding(MoveBase.m_ac.m_chargeState, SYSstatus_para->driver_status, SYSstatus_para->IO_status, SYSstatus_para->Sys_status);
 		//MODslave_Send_0DH( MoveBase.m_ac.m_chargeState, SYSstatus_para->driver_status, SYSstatus_para->IO_status, SYSstatus_para->Sys_status, CMD_OP_SYS_STATUS);
@@ -324,14 +323,16 @@ void SYSstatus_loop( SYSstatus_parameter* SYSstatus_para )
 //运动控制板只相应动作指令
 void CMoveBase_loop( CMoveBase_parameter* CMoveBase_para )
 {
-//	CMoveBase_softStop(CMoveBase_para);   //改好
+	CMoveBase_softStop(CMoveBase_para);   //改好
 	CMoveChargeState_loop(CMoveBase_para);//差更改充电指令
-//	CODO2PG_loop( &CMoveBase_para->m_odo);//验证发送ODO指令
-//	COBD_loop(&CMoveBase_para->m_obd);		//验证电压
+	CODO2PG_loop( &CMoveBase_para->m_odo);//验证发送ODO指令
+	COBD_loop(&CMoveBase_para->m_obd);		//验证电压
 	CLED_loop( &CMoveBase_para->m_LED);		//验证灯逻辑
 	SYSstatus_loop( &CMoveBase_para->m_SYSstatus);//系统状态发送
-//	CMoveBase_checkHeartBeat( CMoveBase_para);
-//	CMoveBase_checkStartUp(CMoveBase_para);
+	//抱死
+	//
+	CMoveBase_checkHeartBeat( CMoveBase_para);
+	CMoveBase_checkStartUp(CMoveBase_para);
 }
 
 int CMoveBase_procEvent( CMoveBase_parameter* CMoveBase_para, int nCmdOp, int* pParam, int nParamNum )

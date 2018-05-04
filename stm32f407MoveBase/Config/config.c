@@ -43,6 +43,7 @@ Gpio_pin_parameter m_Elevator_UP_Limit;
 Gpio_pin_parameter m_Elevator_DOWN_Limit;
 
 Gpio_pin_parameter m_LED_Port;
+Gpio_pin_parameter m_B_STOP; //抱死
 
 //off on state
 boolean UP_ON_OFF;
@@ -91,8 +92,8 @@ void MoveBasePinDefine(void)
 	m_Relay_AC.m_pin  = GPIO_Pin_10;
 
 	//开关机引脚
-	m_Startup_Port.m_gpio = GPIOC;
-	m_Startup_Port.m_pin  = GPIO_Pin_0;
+	m_Startup_Port.m_gpio = GPIOB;
+	m_Startup_Port.m_pin  = GPIO_Pin_12;
 
 	//总电源 继电器
 	m_PowerRelay.m_gpio = GPIOE;
@@ -113,6 +114,8 @@ void MoveBasePinDefine(void)
 	//电压传感器接口 外部中断
 	m_Voltage_Pin.m_gpio = GPIOC;
 	m_Voltage_Pin.m_pin  = GPIO_Pin_4;
+	//抱死开关
+	
 
 //	//升降机up down
 //	m_Elevator_UP.m_gpio = GPIOA;
