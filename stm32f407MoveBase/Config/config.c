@@ -115,7 +115,8 @@ void MoveBasePinDefine(void)
 	m_Voltage_Pin.m_gpio = GPIOC;
 	m_Voltage_Pin.m_pin  = GPIO_Pin_4;
 	//抱死开关
-	
+	m_B_STOP.m_gpio = GPIOC;
+	m_B_STOP.m_pin = GPIO_Pin_8;
 
 //	//升降机up down
 //	m_Elevator_UP.m_gpio = GPIOA;

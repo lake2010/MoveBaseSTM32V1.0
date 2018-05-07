@@ -25,6 +25,8 @@ void CMoveBase_setup( CMoveBase_parameter* CMoveBase_para )
 	pinInputModeInit(&m_SoftStop_key);
 	//开关机按键初始化
 	pinInputModeInit(&m_Startup_Port);
+	//抱死开关按键设置
+	pinInputModeInit(&m_B_STOP);
 	//PWM定时器设置
 	TIM5_Init();
 	TIM4_Init();
@@ -38,8 +40,8 @@ void CMoveBase_setup( CMoveBase_parameter* CMoveBase_para )
 	//CSonar_setup( &CMoveBase_para->m_sonar );//sonar
 	CMoveBase_para->m_heartBeat = millis();
 	CMoveBase_para->m_accTimer = millis();
-	//CMove2_start( &CMoveBase_para->m_move );
-	//CMove2_setv( &CMoveBase_para->m_move, 0, 0, 0 );
+//	CMove2_start( &CMoveBase_para->m_move );
+//	CMove2_setv( &CMoveBase_para->m_move, 0, 0, 0 );
 	COBD_setup(&CMoveBase_para->m_obd);	
 	CLED_setup( &CMoveBase_para->m_LED, &m_LED_Port );
 	SYSstatus_setup(&CMoveBase_para->m_SYSstatus);
@@ -53,19 +55,18 @@ void CMoveBase_softStop(CMoveBase_parameter* CMoveBase_para)
 	if( pinDigitalRead(&m_SoftStop_key) == LOW ){
 		delay(10);
 		if( pinDigitalRead(&m_SoftStop_key) == LOW ){
-			myprintf("LOW\r\n");
+		//	myprintf("LOW\r\n");
 			CMove2_setv(&CMoveBase_para->m_move, 0, 0, 0);
 			if( CMoveBase_para->softstop_state != 1 ){
 				CMoveBase_para->softstop_state = 1;
-				setbit(CMoveBase_para->SYSstatus,0);
-				
+				setbit(CMoveBase_para->m_SYSstatus.Sys_status,0);
 			}
 		}
 	}else{
 		if( CMoveBase_para->softstop_state != 0 ){
 			CMoveBase_para->softstop_state = 0;
-			clrbit(CMoveBase_para->SYSstatus,0);
-			myprintf("HIGH\r\n");
+			clrbit(CMoveBase_para->m_SYSstatus.Sys_status,0);
+			//myprintf("HIGH\r\n");
 		}
 	}
 }
@@ -76,6 +77,7 @@ void CMoveBase_checkStartUp(CMoveBase_parameter* CMoveBase_para)
 		if(pinDigitalRead(&m_Startup_Port) == LOW){
 			while(pinDigitalRead(&m_Startup_Port) == LOW);
 			if(UP_ON_OFF){
+				setbit(CMoveBase_para->m_SYSstatus.Sys_status,3);
 				UP_ON_OFF = false;
 				//g_obj.pMove->stop();
 				CMove2_setv(&CMoveBase_para->m_move, 0, 0, 0);
@@ -84,6 +86,7 @@ void CMoveBase_checkStartUp(CMoveBase_parameter* CMoveBase_para)
 			}else{
 				CMove2_start( &CMoveBase_para->m_move );
 				UP_ON_OFF = true;
+				clrbit(CMoveBase_para->m_SYSstatus.Sys_status,3);
 				pinDigitalWrite(&m_PowerRelay,  HIGH);
 				delay(5000);
 			}
@@ -122,9 +125,8 @@ void CMoveBase_USART4Read(CMoveBase_parameter* CMoveBase_para)
 							((int16_t)buf[7]);
 				pParam[2] = ((int16_t)buf[8]<<8)   |
 							((int16_t)buf[9]);
-				//myprintfUSART1("%d,%d,%d",pParam[0],pParam[1],pParam[2]);
-				//myprintfUSART4("%d,%d,%d",pParam[0],pParam[1],pParam[2]);
-				myprintfUSART1("CMD_OP_SET_V\r\n");
+				myprintfUSART1("%d,%d,%d\r\n",pParam[0],pParam[1],pParam[2]);
+				//myprintfUSART1("CMD_OP_SET_V\r\n");
 				CMove2_setv( &CMoveBase_para->m_move, pParam[0],pParam[1],pParam[2]);				
 				break;
 			case CMD_OP_STOP: /* 电机停止运动（电机停止后，保持使能,但可被转动） */	
@@ -187,8 +189,9 @@ void CMoveBase_USART3Read(CMoveBase_parameter* CMoveBase_para)
 							((int16_t)buf[7]);
 				pParam[2] = ((int16_t)buf[8]<<8)   |
 							((int16_t)buf[9]);
-				//myprintfUSART1("%d,%d,%d",pParam[0],pParam[1],pParam[2]);
+				myprintfUSART1("V:%d,%d,%d",pParam[0],pParam[1],pParam[2]);
 				//myprintfUSART4("%d,%d,%d",pParam[0],pParam[1],pParam[2]);
+			
 				CMove2_setv( &CMoveBase_para->m_move, pParam[0],pParam[1],pParam[2]);				
 				break;
 			case CMD_OP_STOP: /* 电机停止运动（电机停止后，保持使能,但可被转动） */	
@@ -275,18 +278,20 @@ void SYSstatus_printfEncoding(char value1, char value2, char value3, char value4
 	buf[index++] = 0xAA;
 	buf[index++] = 0x55;
 	buf[index++] = 0x01;//len
-	buf[index++] = 0x6F;
-	buf[index++] = value1;
-	buf[index++] = value2;
- 	buf[index++] = value3;
-	buf[index++] = value4;
+	buf[index++] = 0x71;
+	buf[index++] = value1 ;
+	buf[index++] = value2 ;
+ 	buf[index++] = value3 ;
+	buf[index++] = value4 ;
+	buf[index++] = 0x00 ;
+	buf[index++] = 0x00 ;
 	buf[2] = index-3;//len
 	byte crc = 0;
 	for(int i = 2; i < index; i++)
 		crc ^= buf[i];
 	buf[index++] = crc;
 	mySerialWriteUSART4(buf,index); //主机
-	//mySerialWriteUSART3(buf,index); //
+	mySerialWriteUSART1(buf,index); //
 }
 
 
@@ -313,26 +318,45 @@ void SYSstatus_loop( SYSstatus_parameter* SYSstatus_para )
 					break;
 			}
 		}
+		//myprintfUSART1("%x\r,%x\r,%x\r,%x\r\n",MoveBase.m_ac.m_chargeState, SYSstatus_para->driver_status, SYSstatus_para->IO_status, SYSstatus_para->Sys_status);
+		//SYSstatus_printfEncoding(0,0,0,0);
 		SYSstatus_printfEncoding(MoveBase.m_ac.m_chargeState, SYSstatus_para->driver_status, SYSstatus_para->IO_status, SYSstatus_para->Sys_status);
-		//MODslave_Send_0DH( MoveBase.m_ac.m_chargeState, SYSstatus_para->driver_status, SYSstatus_para->IO_status, SYSstatus_para->Sys_status, CMD_OP_SYS_STATUS);
-	    SYSstatus_para->m_SYStimeLastRead = millis();
+	  SYSstatus_para->m_SYStimeLastRead = millis();
 	}
 }
 
+//抱死开关 1表示抱死
+void CMoveBase_softLocking(CMoveBase_parameter* CMoveBase_para)
+{
+		if(pinDigitalRead(&m_B_STOP) == LOW)
+		{
+			delay(10);
+			if(pinDigitalRead(&m_B_STOP) == LOW)
+			{
+				setbit(CMoveBase_para->m_SYSstatus.Sys_status,4);
+				CMoveBase_para->softLocking_state = 1;
+			}
+		}
+		else
+		{
+				clrbit(CMoveBase_para->m_SYSstatus.Sys_status,4);
+				CMoveBase_para->softLocking_state = 0;
+		}
+		myprintfUSART1("Status:%x\r\n",CMoveBase_para->m_SYSstatus.Sys_status);
+}
 
 //运动控制板只相应动作指令
 void CMoveBase_loop( CMoveBase_parameter* CMoveBase_para )
 {
-	CMoveBase_softStop(CMoveBase_para);   //改好
-	CMoveChargeState_loop(CMoveBase_para);//差更改充电指令
-	CODO2PG_loop( &CMoveBase_para->m_odo);//验证发送ODO指令
-	COBD_loop(&CMoveBase_para->m_obd);		//验证电压
-	CLED_loop( &CMoveBase_para->m_LED);		//验证灯逻辑
-	SYSstatus_loop( &CMoveBase_para->m_SYSstatus);//系统状态发送
-	//抱死
-	//
-	CMoveBase_checkHeartBeat( CMoveBase_para);
-	CMoveBase_checkStartUp(CMoveBase_para);
+	CMoveBase_softStop(CMoveBase_para);   
+	CMoveChargeState_loop(CMoveBase_para);
+//	CODO2PG_loop( &CMoveBase_para->m_odo);
+//	COBD_loop(&CMoveBase_para->m_obd);		//验证电压
+//	CLED_loop( &CMoveBase_para->m_LED);	
+//	CMoveBase_softLocking(CMoveBase_para);
+//	CMoveBase_checkHeartBeat( CMoveBase_para);
+//	CMoveBase_checkStartUp(CMoveBase_para);	
+	SYSstatus_loop( &CMoveBase_para->m_SYSstatus);
 }
 
 int CMoveBase_procEvent( CMoveBase_parameter* CMoveBase_para, int nCmdOp, int* pParam, int nParamNum )

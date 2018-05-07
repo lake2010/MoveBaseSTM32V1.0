@@ -2,6 +2,7 @@
 #define _MotorDC_H
 #include "config.h"
 
+
 //#define m_MAX_FREQUWNCY	4000000
 
 //#define m_MAX_SPEED_FRE	600000
@@ -56,6 +57,7 @@ typedef struct CMotorDC_parameter_all
 	Gpio_pin_parameter* m_gpioBK;//berak
 
 }CMotorDC_parameter;
+
 
 void CMotorDC_parameter_setup(CMotorDC_parameter* CMotorDC_para);
 

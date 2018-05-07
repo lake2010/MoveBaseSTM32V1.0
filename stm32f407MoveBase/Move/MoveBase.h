@@ -62,6 +62,7 @@ typedef struct CMoveBase_parameter_all
 	int						softstop_state;
 	int 					getcmd_state;
 	int 					getCoff_state;//获取上位机充电下发的充电指令状态
+	int						softLocking_state;
 	uint16_t 				SYSstatus;
 }CMoveBase_parameter;
 

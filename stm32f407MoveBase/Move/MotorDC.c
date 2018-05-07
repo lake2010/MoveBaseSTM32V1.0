@@ -1,5 +1,6 @@
 #include "MotorDC.h"
 #include "config.h"
+#include "MoveBase.h"
 
 void CMotorDC_setMotorSpeed( CMotorDC_parameter* CMotorDC_para, int rpm );
 long CMotorDC_rpm2w( CMotorDC_parameter* CMotorDC_para, int rpm );
@@ -144,18 +145,26 @@ void CMotorDC_setPWM( CMotorDC_parameter* CMotorDC_para, int rpm )
 		unsigned int frequency = (unsigned int)(frequency_d);
 		double duty_d = ( (double)rpm * (double)frequency ) / (double)m_MAX_RPM;//m_MAX_FREQUWNCY
 		unsigned int duty = (unsigned int)(duty_d);
+		//抱死开关
+		if(MoveBase.softLocking_state)
+		{
+			if(rpm == 0)
+				CMotorDC_breakit(CMotorDC_para,true);
+			else
+				CMotorDC_breakit(CMotorDC_para,false);
+		}
+		else
+		{
+				CMotorDC_breakit(CMotorDC_para,false);
+		}
 		if (rpm == 0){
 		if( (CMotorDC_para->m_gpioSV) == &m_SV_Port_L )
 		{
 			TIM_Cmd(TIM5, DISABLE);
-//		TIM_SetCompare3(TIM5,duty);//左轮由TIM5控制,选择第三通道
-//		TIM_SetAutoreload(TIM5,frequency);
 		}
 		else if( (CMotorDC_para->m_gpioSV) == &m_SV_Port_R )
 		{
 			TIM_Cmd(TIM4, DISABLE);
-//		TIM_SetCompare1(TIM4,duty);//选择第1通道
-//		TIM_SetAutoreload(TIM4,frequency);
 		}
 		CMotorDC_enableit( CMotorDC_para, false );
 		return;
@@ -176,46 +185,6 @@ void CMotorDC_setPWM( CMotorDC_parameter* CMotorDC_para, int rpm )
 		else if( (CMotorDC_para->m_gpioSV) == &m_SV_Port_R )
 		TIM_Cmd(TIM4, ENABLE);
 	}
-	
-//	float m_rpm = rpm;
-//	float MAX_SPEED_FRE = m_MAX_SPEED_FRE;
-//	float MAX_RPM = m_MAX_RPM;
-//	float MAX_FREQUWNCY = m_MAX_FREQUWNCY;
-//	float frequency_d = 0;
-//	frequency_d = m_rpm * (MAX_SPEED_FRE / MAX_RPM);//m_MAX_FREQUWNCY
-//	frequency_d = MAX_FREQUWNCY / frequency_d;
-//	unsigned int frequency = (unsigned int)(frequency_d);
-//	//double duty_d = ( (double)rpm * (double)2000 ) / (double)m_MAX_RPM;//m_MAX_FREQUWNCY
-//	//unsigned int duty = (unsigned int)(duty_d);
-
-//	// to avoid noising.
-//	if (rpm == 0){
-//		if( (CMotorDC_para->m_gpioSV) == &m_SV_Port_L ){
-//			TIM_Cmd(TIM5, DISABLE);
-//		}else if( (CMotorDC_para->m_gpioSV) == &m_SV_Port_R ){
-//			TIM_Cmd(TIM4, DISABLE);
-//		}
-//		CMotorDC_enableit( CMotorDC_para, false );
-//		return;
-//	}
-
-//	if( (CMotorDC_para->m_gpioSV) == &m_SV_Port_L ){
-//		TIM_SetCompare3(TIM5,(frequency/2));
-//		TIM_SetAutoreload(TIM5,frequency);
-//	}else if( (CMotorDC_para->m_gpioSV) == &m_SV_Port_R ){
-//		TIM_SetCompare1(TIM4,(frequency/2));
-//		TIM_SetAutoreload(TIM4,frequency);
-//	}
-
-//	if( rpm != 0 ){
-//		CMotorDC_enableit( CMotorDC_para, true );
-//		if( (CMotorDC_para->m_gpioSV) == &m_SV_Port_L ){
-//			TIM_Cmd(TIM5, ENABLE);
-//		}else if( (CMotorDC_para->m_gpioSV) == &m_SV_Port_R ){
-//			TIM_Cmd(TIM4, ENABLE);
-//		}		
-//	}
-//	moveprintf(( "duty=%d\n",(int)frequency ));
 }
 
 void CMotorDC_enableCoff( CMotorDC_parameter*	CMotorDC_para, int flag )

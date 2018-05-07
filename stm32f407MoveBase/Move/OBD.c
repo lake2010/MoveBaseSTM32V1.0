@@ -180,7 +180,6 @@ void COBD_printfEncoding(uint16_t temp_voltage
 	buf[index++] = 0x6F;
 	buf[index++] = (( uint16_t)temp_voltage>> 8) & 0xFF;
 	buf[index++] = (((uint16_t)temp_voltage)) & 0xFF;
- 	buf[index++] = (( uint16_t)temp_batteryPercentage>> 8) & 0xFF;
 	buf[index++] = (((uint16_t)temp_batteryPercentage)) & 0xFF;
 	buf[index++] = (( uint16_t)temp_electricity>> 8) & 0xFF;
 	buf[index++] = (((uint16_t)temp_electricity)) & 0xFF;
