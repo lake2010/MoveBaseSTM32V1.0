@@ -12,7 +12,7 @@ void ADC1_ch3ch7ch14ch15_init(void)
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC1, ENABLE);
 
 	//先初始化ADC1通道5 IO口
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3 | GPIO_Pin_7;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_3 | GPIO_Pin_7; //A7整机电流检测
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(GPIOA, &GPIO_InitStructure);
@@ -38,7 +38,7 @@ void ADC1_ch3ch7ch14ch15_init(void)
 	
 	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
 	RCC_APB2PeriphClockCmd(RCC_APB2Periph_ADC2,  ENABLE);
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 | GPIO_Pin_5;
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_4 ;//| GPIO_Pin_5; //C4整机电压 //C5自动充电检测
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AN;
 	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
 	GPIO_Init(GPIOC, &GPIO_InitStructure);
@@ -153,11 +153,14 @@ void COBD_setup(CODB_parameter* CODB_para)
 
 float COBD_getVol(int _t)
 {
+	  uint16_t valtest = 0;
 		ADC_RegularChannelConfig(ADC2, ADC_Channel_14, 1, ADC_SampleTime_480Cycles  );//ADC1,ADC通道,480个周期,提高采样时间可以提高精确度
 		ADC_SoftwareStartConv(ADC2);//使能指定的ADC1的软件转换启动功能	
 		while(!ADC_GetFlagStatus(ADC2, ADC_FLAG_EOC ))
 		{}
-	  float val = ADC_GetConversionValue(ADC2)/ 4095 * 3.3 * 11;//返回最近一次ADC1规则组的转换结果   
+		valtest= ADC_GetConversionValue(ADC2);
+		myprintfUSART1("VAL%d\r\n",valtest);
+	  float val = ADC_GetConversionValue(ADC2)* 3.3 / 4095 * 11;//返回最近一次ADC1规则组的转换结果   
 		float y = val ;//1.028是为了调整精度
 		return y;	
 }
@@ -180,7 +183,7 @@ void COBD_printfEncoding(uint16_t temp_voltage
 	buf[index++] = 0x6F;
 	buf[index++] = (( uint16_t)temp_voltage>> 8) & 0xFF;
 	buf[index++] = (((uint16_t)temp_voltage)) & 0xFF;
-	buf[index++] = (((uint16_t)temp_batteryPercentage)) & 0xFF;
+	buf[index++] =  0xFF;
 	buf[index++] = (( uint16_t)temp_electricity>> 8) & 0xFF;
 	buf[index++] = (((uint16_t)temp_electricity)) & 0xFF;
 	buf[index++] = (( uint16_t)temp1_m_tmp>> 8) & 0xFF;

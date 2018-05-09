@@ -63,7 +63,7 @@ typedef struct CMoveBase_parameter_all
 	int 					getcmd_state;
 	int 					getCoff_state;//获取上位机充电下发的充电指令状态
 	int						softLocking_state;
-	uint16_t 				SYSstatus;
+	//uint16_t 				SYSstatus;
 }CMoveBase_parameter;
 
 
@@ -74,6 +74,9 @@ void SYSstatus_setup( SYSstatus_parameter* SYSstatus_para);
 extern CMoveBase_parameter MoveBase;
 void CMoveBase_setup( CMoveBase_parameter* CMoveBase_para );
 void CMoveBase_loop( CMoveBase_parameter* CMoveBase_para );
+
+void CMoveBase_softStop(CMoveBase_parameter* CMoveBase_para);
+void CMoveBase_softLocking(CMoveBase_parameter* CMoveBase_para);
 
 /*
 // TODO:	

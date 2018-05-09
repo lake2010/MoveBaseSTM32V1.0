@@ -43,6 +43,6 @@ typedef		u8      boolean;
 #define LIMIT_RANGE(x,a,b) x = MIN(MAX(x,a),b)
 
 #define setbit(x,y) x|=(1<<y) //将X的第Y位置1
-#define clrbit(x,y) x&=!(1<<y) //将X的第Y位清0
+#define clrbit(x,y) x&=~(1<<y) //将X的第Y位清0
 
 #endif

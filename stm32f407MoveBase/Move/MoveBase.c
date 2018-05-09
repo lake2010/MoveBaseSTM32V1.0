@@ -17,7 +17,6 @@ void CMoveBase_setup( CMoveBase_parameter* CMoveBase_para )
 	MoveBasePinDefine();
 	CMoveBase_para->IRstate = 0;
 	CMoveBase_para->softstop_state = -1;
-	//总电源继电器pin初始化
 	pinOutputModeInit(&m_PowerRelay);
 	pinDigitalWrite(&m_PowerRelay, true);
 	UP_ON_OFF = true;
@@ -30,18 +29,14 @@ void CMoveBase_setup( CMoveBase_parameter* CMoveBase_para )
 	//PWM定时器设置
 	TIM5_Init();
 	TIM4_Init();
-	//CCmd_setup( &CMoveBase_para->m_cmd );//message
 	CMySerial_init(&CMoveBase_para->m_ccm);
 	CMySerial_init(&CMoveBase_para->m_ccm3);
 	CMove2_setup(&CMoveBase_para->m_move );//motor
-	//CAutoCharge_setup( &CMoveBase_para->m_ac );//auto charge
-	
-	CODO2PG_setup( &CMoveBase_para->m_odo );//odo
+//	
+	//CODO2PG_setup( &CMoveBase_para->m_odo );//odo
 	//CSonar_setup( &CMoveBase_para->m_sonar );//sonar
 	CMoveBase_para->m_heartBeat = millis();
 	CMoveBase_para->m_accTimer = millis();
-//	CMove2_start( &CMoveBase_para->m_move );
-//	CMove2_setv( &CMoveBase_para->m_move, 0, 0, 0 );
 	COBD_setup(&CMoveBase_para->m_obd);	
 	CLED_setup( &CMoveBase_para->m_LED, &m_LED_Port );
 	SYSstatus_setup(&CMoveBase_para->m_SYSstatus);
@@ -55,17 +50,17 @@ void CMoveBase_softStop(CMoveBase_parameter* CMoveBase_para)
 	if( pinDigitalRead(&m_SoftStop_key) == LOW ){
 		delay(10);
 		if( pinDigitalRead(&m_SoftStop_key) == LOW ){
-		//	myprintf("LOW\r\n");
+		//	myprintfUSART1("softLOW\r\n");
 			CMove2_setv(&CMoveBase_para->m_move, 0, 0, 0);
+			setbit(CMoveBase_para->m_SYSstatus.Sys_status,0);
 			if( CMoveBase_para->softstop_state != 1 ){
 				CMoveBase_para->softstop_state = 1;
-				setbit(CMoveBase_para->m_SYSstatus.Sys_status,0);
 			}
 		}
 	}else{
+		clrbit(CMoveBase_para->m_SYSstatus.Sys_status,0);
 		if( CMoveBase_para->softstop_state != 0 ){
-			CMoveBase_para->softstop_state = 0;
-			clrbit(CMoveBase_para->m_SYSstatus.Sys_status,0);
+			CMoveBase_para->softstop_state = 0;	
 			//myprintf("HIGH\r\n");
 		}
 	}
@@ -98,6 +93,7 @@ void CMoveBase_checkStartUp(CMoveBase_parameter* CMoveBase_para)
 void CMoveBase_USART4Read(CMoveBase_parameter* CMoveBase_para)
 {
 	//急停状态不响应指令
+	setbit(CMoveBase_para->m_SYSstatus.Sys_status,1);//握手
 	if(CMoveBase_para->softstop_state == 1)
 		return;
 	int16_t pParam[MAX_CMD_PARAM_NUM];
@@ -114,9 +110,9 @@ void CMoveBase_USART4Read(CMoveBase_parameter* CMoveBase_para)
 		CMoveBase_para->getcmd_state = 1;//获得有效指令
 		switch(buf[3])
 		{
-			case CMD_OP_START:
+			case CMD_OP_START:			
+				setbit(CMoveBase_para->m_SYSstatus.Sys_status,1);//握手
 				CMove2_start(&CMoveBase_para->m_move);
-				myprintfUSART1("CMD_OP_START\r\n");
 				break;
 			case CMD_OP_SET_V:	
 				pParam[0] = ((int16_t)buf[4]<<8)   |
@@ -125,33 +121,31 @@ void CMoveBase_USART4Read(CMoveBase_parameter* CMoveBase_para)
 							((int16_t)buf[7]);
 				pParam[2] = ((int16_t)buf[8]<<8)   |
 							((int16_t)buf[9]);
-				myprintfUSART1("%d,%d,%d\r\n",pParam[0],pParam[1],pParam[2]);
-				//myprintfUSART1("CMD_OP_SET_V\r\n");
+//				myprintfUSART1("%d,%d,%d\r\n",pParam[0],pParam[1],pParam[2]);
 				CMove2_setv( &CMoveBase_para->m_move, pParam[0],pParam[1],pParam[2]);				
 				break;
 			case CMD_OP_STOP: /* 电机停止运动（电机停止后，保持使能,但可被转动） */	
 				CMove2_stop( &CMoveBase_para->m_move);
-				myprintfUSART1("CMD_OP_STOP\r\n");
 				break;
 			case CMD_OP_AC_ON:
 				CMove2_enableCoff( &CMoveBase_para->m_move, 1 );
-				//接收到充电指令，重新发送运动控制板
 				CMoveBase_para->getCoff_state = 1;
 				mySerialWriteUSART3((byte*)buf,len);
-				mySerialWriteUSART1((byte*)buf,len);
 				break;
 			case CMD_OP_AC_OFF:
 				CMove2_enableCoff( &CMoveBase_para->m_move, 0 );
 				mySerialWriteUSART3((byte*)buf,len);
 				CMoveBase_para->getCoff_state = 0;
 			  CMove2_start(&CMoveBase_para->m_move);
-				myprintfUSART1("CMD_OP_AC_OFF\r\n");
+			  CMove2_setv( &CMoveBase_para->m_move,0,0,0);	
 				break;
 			default:
-				//mySerialWriteUSART4((byte*)buf,len);
 				break;
 		}
-		//mySerialWriteUSART4((byte*)buf,len);
+//			for (int i = 0; i < m_MOTOR_NUM; i++)
+//			{
+//				CMotorDC_updateSpeed( &CMoveBase_para->m_move.m_motor[i], true, CMoveBase_para->m_move.m_motor[i].m_curRPM );//MoveBase.m_move.m_motor[0].m_curRPM
+//			}
 	}
 	else
 	{
@@ -179,6 +173,7 @@ void CMoveBase_USART3Read(CMoveBase_parameter* CMoveBase_para)
 		switch(buf[3])
 		{
 			case CMD_OP_START:
+				setbit(CMoveBase_para->m_SYSstatus.Sys_status,1);//握手
 				CMove2_start(&CMoveBase_para->m_move);
 				//myprintfUSART4("\nCMD_OP_START\n");
 				break;
@@ -189,17 +184,27 @@ void CMoveBase_USART3Read(CMoveBase_parameter* CMoveBase_para)
 							((int16_t)buf[7]);
 				pParam[2] = ((int16_t)buf[8]<<8)   |
 							((int16_t)buf[9]);
-				myprintfUSART1("V:%d,%d,%d",pParam[0],pParam[1],pParam[2]);
-				//myprintfUSART4("%d,%d,%d",pParam[0],pParam[1],pParam[2]);
-			
 				CMove2_setv( &CMoveBase_para->m_move, pParam[0],pParam[1],pParam[2]);				
 				break;
 			case CMD_OP_STOP: /* 电机停止运动（电机停止后，保持使能,但可被转动） */	
 				CMove2_stop( &CMoveBase_para->m_move);
 				break;
+			case CMD_OP_AC_OFF:
+				CMove2_enableCoff( &CMoveBase_para->m_move, 0 );						
+				CMove2_start(&CMoveBase_para->m_move);
+				//CMove2_setv( &CMoveBase_para->m_move,100,0,0);	
+			//临时加 后期需要超声波
+				delay(1000);
+			  CMove2_setv( &CMoveBase_para->m_move,0,0,0);	
+				CMoveBase_para->getCoff_state = 0;
 			default:
+					mySerialWriteUSART4((byte*)buf,len);
 				break;
 		}
+//			for (int i = 0; i < m_MOTOR_NUM; i++)
+//			{
+//				CMotorDC_updateSpeed( &CMoveBase_para->m_move.m_motor[i], true, CMoveBase_para->m_move.m_motor[i].m_curRPM );//MoveBase.m_move.m_motor[0].m_curRPM
+//			}
 	}
 	else
 	{
@@ -212,6 +217,7 @@ void CMoveBase_USART3Read(CMoveBase_parameter* CMoveBase_para)
 void CMoveBase_USART4ReadOff(CMoveBase_parameter* CMoveBase_para)
 {
 	//急停状态不响应指令
+	setbit(CMoveBase_para->m_SYSstatus.Sys_status,1);//握手
 	if(CMoveBase_para->softstop_state == 1)
 		return;
 	char*    buf = 0;
@@ -236,7 +242,7 @@ void CMoveBase_USART4ReadOff(CMoveBase_parameter* CMoveBase_para)
 			//临时加 后期需要超声波
 				delay(1000);
 			  CMove2_setv( &CMoveBase_para->m_move,0,0,0);	
-			  myprintfUSART1("OFF\r\n");
+//			  myprintfUSART1("OFF\r\n");
 				break;
 			default:
 				break;
@@ -251,6 +257,7 @@ void CMoveBase_USART4ReadOff(CMoveBase_parameter* CMoveBase_para)
 
 void CMoveChargeState_loop(CMoveBase_parameter* CMoveBase_para)
 {
+	myprintfUSART1("%d\r\n",CMoveBase_para->getCoff_state);
 	if(CMoveBase_para->getCoff_state)
 	{
 		CMoveBase_USART4ReadOff(CMoveBase_para);	
@@ -278,23 +285,21 @@ void SYSstatus_printfEncoding(char value1, char value2, char value3, char value4
 	buf[index++] = 0xAA;
 	buf[index++] = 0x55;
 	buf[index++] = 0x01;//len
-	buf[index++] = 0x71;
-	buf[index++] = value1 ;
-	buf[index++] = value2 ;
- 	buf[index++] = value3 ;
-	buf[index++] = value4 ;
-	buf[index++] = 0x00 ;
-	buf[index++] = 0x00 ;
+	buf[index++] = 0x71; //71
+	buf[index++] = value1;
+	buf[index++] = value2;
+ 	buf[index++] = value3;
+	buf[index++] = value4;
+	buf[index++] = 0x00;
+	buf[index++] = 0x00;
 	buf[2] = index-3;//len
 	byte crc = 0;
 	for(int i = 2; i < index; i++)
 		crc ^= buf[i];
 	buf[index++] = crc;
 	mySerialWriteUSART4(buf,index); //主机
-	mySerialWriteUSART1(buf,index); //
+	mySerialWriteUSART1(buf,index); //主机
 }
-
-
 
 void SYSstatus_loop( SYSstatus_parameter* SYSstatus_para )
 {
@@ -303,24 +308,29 @@ void SYSstatus_loop( SYSstatus_parameter* SYSstatus_para )
 	unsigned long dt = millis() - SYSstatus_para->m_SYStimeLastRead; 
 	if (dt>800)
 	{ 
-		if(CMySerial_getCmd_reeman(&MoveBase.m_ccm3, &buf, &len) )
+		if(MoveBase.getCoff_state)
 		{
-			unsigned char crc = 0;
-			for( int i = 2; i < (len-1); i++ ){
-				crc ^=buf[i];
-			}
-			if( crc != buf[len-1] )
-			return;	
-			switch(buf[3])
+			if(CMySerial_getCmd_reeman(&MoveBase.m_ccm3, &buf, &len) )
 			{
-				case CMD_OP_SYS_STATUS:
-					MoveBase.m_ac.m_chargeState = buf[4];
-					break;
+				unsigned char crc = 0;
+				for( int i = 2; i < (len-1); i++ ){
+					crc ^=buf[i];
+				}
+				if( crc != buf[len-1] )
+				return;	
+				switch(buf[3])
+				{
+					case CMD_OP_SYS_STATUS:
+						SYSstatus_para->charge_status = buf[4];
+						break;
+				}
 			}
 		}
-		//myprintfUSART1("%x\r,%x\r,%x\r,%x\r\n",MoveBase.m_ac.m_chargeState, SYSstatus_para->driver_status, SYSstatus_para->IO_status, SYSstatus_para->Sys_status);
-		//SYSstatus_printfEncoding(0,0,0,0);
-		SYSstatus_printfEncoding(MoveBase.m_ac.m_chargeState, SYSstatus_para->driver_status, SYSstatus_para->IO_status, SYSstatus_para->Sys_status);
+		else
+		{
+			SYSstatus_para->charge_status = 0;
+		}
+		SYSstatus_printfEncoding(SYSstatus_para->charge_status, SYSstatus_para->driver_status, SYSstatus_para->IO_status, SYSstatus_para->Sys_status);
 	  SYSstatus_para->m_SYStimeLastRead = millis();
 	}
 }
@@ -342,7 +352,7 @@ void CMoveBase_softLocking(CMoveBase_parameter* CMoveBase_para)
 				clrbit(CMoveBase_para->m_SYSstatus.Sys_status,4);
 				CMoveBase_para->softLocking_state = 0;
 		}
-		myprintfUSART1("Status:%x\r\n",CMoveBase_para->m_SYSstatus.Sys_status);
+		//myprintfUSART1("Status:%x\r\n",CMoveBase_para->m_SYSstatus.Sys_status);
 }
 
 //运动控制板只相应动作指令
@@ -350,12 +360,12 @@ void CMoveBase_loop( CMoveBase_parameter* CMoveBase_para )
 {
 	CMoveBase_softStop(CMoveBase_para);   
 	CMoveChargeState_loop(CMoveBase_para);
-//	CODO2PG_loop( &CMoveBase_para->m_odo);
-//	COBD_loop(&CMoveBase_para->m_obd);		//验证电压
-//	CLED_loop( &CMoveBase_para->m_LED);	
-//	CMoveBase_softLocking(CMoveBase_para);
-//	CMoveBase_checkHeartBeat( CMoveBase_para);
-//	CMoveBase_checkStartUp(CMoveBase_para);	
+	CODO2PG_loop( &CMoveBase_para->m_odo);
+	COBD_loop(&CMoveBase_para->m_obd);		//验证电压	
+	CLED_loop( &CMoveBase_para->m_LED);	
+	CMoveBase_softLocking(CMoveBase_para);
+	CMoveBase_checkHeartBeat(CMoveBase_para);
+	CMoveBase_checkStartUp(CMoveBase_para);
 	SYSstatus_loop( &CMoveBase_para->m_SYSstatus);
 }
 

@@ -111,7 +111,7 @@ void MoveBasePinDefine(void)
 	m_Elect_Pin.m_gpio = GPIOA;
 	m_Elect_Pin.m_pin  = GPIO_Pin_7;
 
-	//电压传感器接口 外部中断
+//	//电压传感器接口 外部中断
 	m_Voltage_Pin.m_gpio = GPIOC;
 	m_Voltage_Pin.m_pin  = GPIO_Pin_4;
 	//抱死开关

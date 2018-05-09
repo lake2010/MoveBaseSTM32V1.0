@@ -140,6 +140,7 @@ void CMotorDC_setDir( CMotorDC_parameter* CMotorDC_para, int dir )
 void CMotorDC_setPWM( CMotorDC_parameter* CMotorDC_para, int rpm )
 {
 	//  中大电机，以PWM波占空比控制电机转速   变占空比，固定频率//
+		static int breakFlag; 
 		float frequency_d = 0;
 		frequency_d = m_MAX_FREQUWNCY /SV_HZ;
 		unsigned int frequency = (unsigned int)(frequency_d);
@@ -148,14 +149,16 @@ void CMotorDC_setPWM( CMotorDC_parameter* CMotorDC_para, int rpm )
 		//抱死开关
 		if(MoveBase.softLocking_state)
 		{
+			breakFlag = 2; //2个电机
 			if(rpm == 0)
-				CMotorDC_breakit(CMotorDC_para,true);
+				CMotorDC_breakit(CMotorDC_para,true);	
 			else
 				CMotorDC_breakit(CMotorDC_para,false);
 		}
-		else
+		else if(breakFlag)
 		{
-				CMotorDC_breakit(CMotorDC_para,false);
+				breakFlag--;
+				CMotorDC_breakit(	CMotorDC_para, false );
 		}
 		if (rpm == 0){
 		if( (CMotorDC_para->m_gpioSV) == &m_SV_Port_L )

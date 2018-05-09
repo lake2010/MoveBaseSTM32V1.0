@@ -130,65 +130,92 @@ void CODO2PG_interruptSetup(void)
 {
 	NVIC_InitTypeDef   NVIC_InitStructure;
 	EXTI_InitTypeDef   EXTI_InitStructure;
+	GPIO_InitTypeDef   GPIO_InitStructure;
 
-	GPIO_InitTypeDef  GPIO_InitStructure;
-
-	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);//enable GPIOB clk
-
-	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 | GPIO_Pin_1;
+	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);//enable GPIOA clk
+  RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+	
+	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_0 ;//C0与C1为Z脉冲引脚
 	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
 	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
-	GPIO_Init(GPIOC, &GPIO_InitStructure);
-
-	RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
-
-	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOC, EXTI_PinSource0 | EXTI_PinSource1);
+	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+	GPIO_Init(GPIOA, &GPIO_InitStructure);
+// 
+//	
+	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOA, EXTI_PinSource0);
 
 	
-	EXTI_InitStructure.EXTI_Line = EXTI_Line0 | EXTI_Line1;
+	EXTI_InitStructure.EXTI_Line = EXTI_Line0 ;
 	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
 	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling;
 	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
 	EXTI_Init(&EXTI_InitStructure);
-
-	NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQn | EXTI1_IRQn;
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x02;
-	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x01;
+//	
+	NVIC_PriorityGroupConfig( NVIC_PriorityGroup_0);
+	NVIC_InitStructure.NVIC_IRQChannel = EXTI0_IRQn ;
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x00;
+	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x09;
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);
+//	
+//	
+//	RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);//enable GPIOC clk
+//  RCC_APB2PeriphClockCmd(RCC_APB2Periph_SYSCFG, ENABLE);
+//	
+//	GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6 ;//C0与C1为Z脉冲引脚
+//	GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+//	GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+//	GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_NOPULL;
+//	GPIO_Init(GPIOC, &GPIO_InitStructure);
 
-//	NVIC_InitStructure.NVIC_IRQChannel = EXTI1_IRQn;
+
+//	SYSCFG_EXTILineConfig(EXTI_PortSourceGPIOC, EXTI_PinSource6);
+
+//	
+//	EXTI_InitStructure.EXTI_Line = EXTI_Line6 ;
+//	EXTI_InitStructure.EXTI_Mode = EXTI_Mode_Interrupt;
+//	EXTI_InitStructure.EXTI_Trigger = EXTI_Trigger_Falling ;
+//	EXTI_InitStructure.EXTI_LineCmd = ENABLE;
+//	EXTI_Init(&EXTI_InitStructure);
+
+//  NVIC_PriorityGroupConfig( NVIC_PriorityGroup_0);
+//	NVIC_InitStructure.NVIC_IRQChannel = EXTI9_5_IRQn ;
+//	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0x00;
+//	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0x08;
+//	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 //	NVIC_Init(&NVIC_InitStructure);
+
 }
 
 //left
 void EXTI0_IRQHandler(void)
 {
-	if( EXTI_GetFlagStatus(EXTI_Line0) == RESET ){
+	if( EXTI_GetFlagStatus(EXTI_Line0) == !RESET ){
+		CODO2PG_pg_l_int(&MoveBase.m_odo);
 		EXTI_ClearITPendingBit(EXTI_Line0);
 		return;
 	}
 	EXTI_ClearITPendingBit(EXTI_Line0);
-	if (MoveBase.m_odo.m_pwFrMove) {
-		if (MoveBase.m_odo.m_pwFrMove[0] >= 0)
-			MoveBase.m_odo.m_counter_l++;
-		else
-			MoveBase.m_odo.m_counter_l--;
-	}
+//	if (MoveBase.m_odo.m_pwFrMove) {
+//		if (MoveBase.m_odo.m_pwFrMove[0] >= 0)
+//			MoveBase.m_odo.m_counter_l++;
+//		else
+//			MoveBase.m_odo.m_counter_l--;
+//	}
 }
 //right
-void EXTI1_IRQHandler(void)
+void EXTI9_5_IRQHandler(void)
 {
-	if( EXTI_GetFlagStatus(EXTI_Line1) == RESET ){
-		EXTI_ClearITPendingBit(EXTI_Line1);
+	if( EXTI_GetFlagStatus(EXTI_Line6) == !RESET ){
+		CODO2PG_pg_r_int(&MoveBase.m_odo);
+		EXTI_ClearITPendingBit(EXTI_Line6);
 		return;
 	}
-	EXTI_ClearITPendingBit(EXTI_Line1);
-	if (MoveBase.m_odo.m_pwFrMove) {
-		if (MoveBase.m_odo.m_pwFrMove[1] >= 0)
-			MoveBase.m_odo.m_counter_r++;
-		else
-			MoveBase.m_odo.m_counter_r--;
-	}
+	EXTI_ClearITPendingBit(EXTI_Line6);
+//	if (MoveBase.m_odo.m_pwFrMove) {
+//		if (MoveBase.m_odo.m_pwFrMove[1] >= 0)
+//			MoveBase.m_odo.m_counter_r++;
+//		else
+//			MoveBase.m_odo.m_counter_r--;
+//	}
 }
