@@ -64,6 +64,7 @@
 "..\output\led.o"
 "..\output\ds18b20.o"
 "..\output\obd.o"
+"..\output\can.o"
 --strict --scatter "..\output\STM32F401_UWBTOF_ANCHOR.sct"
 --summary_stderr --info summarysizes --map --xref --callgraph --symbols
 --info sizes --info totals --info unused --info veneers

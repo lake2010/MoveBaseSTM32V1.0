@@ -763,6 +763,11 @@
               <FileType>1</FileType>
               <FilePath>..\Move\OBD.c</FilePath>
             </File>
+            <File>
+              <FileName>CAN.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Move\CAN.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

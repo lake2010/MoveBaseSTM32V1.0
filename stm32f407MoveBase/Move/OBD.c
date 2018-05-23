@@ -153,14 +153,14 @@ void COBD_setup(CODB_parameter* CODB_para)
 
 float COBD_getVol(int _t)
 {
-	  uint16_t valtest = 0;
+	  //uint16_t valtest = 0;
 		ADC_RegularChannelConfig(ADC2, ADC_Channel_14, 1, ADC_SampleTime_480Cycles  );//ADC1,ADC通道,480个周期,提高采样时间可以提高精确度
 		ADC_SoftwareStartConv(ADC2);//使能指定的ADC1的软件转换启动功能	
 		while(!ADC_GetFlagStatus(ADC2, ADC_FLAG_EOC ))
 		{}
-		valtest= ADC_GetConversionValue(ADC2);
-		myprintfUSART1("VAL%d\r\n",valtest);
+		//valtest= ADC_GetConversionValue(ADC2);
 	  float val = ADC_GetConversionValue(ADC2)* 3.3 / 4095 * 11;//返回最近一次ADC1规则组的转换结果   
+		//myprintfUSART1("VAL:%d\r\n",val);
 		float y = val ;//1.028是为了调整精度
 		return y;	
 }

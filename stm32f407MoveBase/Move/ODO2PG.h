@@ -6,12 +6,11 @@
 //#define m_MOTOR_NUM 2
 
 #define m_DEC_NUM		30
-#define m_PROPORTION	50
 #define m_WHEEL_DEC_NUM	(m_DEC_NUM * m_PROPORTION)
 #define m_MAG_PRO		5 * m_PROPORTION
 
 #define m_Ts			100 // ms
-
+extern uint16_t m_PROPORTION;
 typedef struct CODO2PG_parameter_all
 {
 	const long*		m_pwFrMove;

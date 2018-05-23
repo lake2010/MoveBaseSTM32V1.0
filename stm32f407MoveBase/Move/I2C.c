@@ -39,7 +39,7 @@ void I2C_start(I2C_TypeDef* I2Cx, uint8_t address, uint8_t direction)
 	while(I2C_GetFlagStatus(I2Cx, I2C_FLAG_BUSY)){
 		timeOut++;
 		if( timeOut > MAX_TIMEOUTCOUNT ){
-			i2c_printf("i2c TimeOut start\r\n");
+			//i2c_printf("i2c TimeOut start\r\n");
 			return;
 		}
 	} 
@@ -48,7 +48,7 @@ void I2C_start(I2C_TypeDef* I2Cx, uint8_t address, uint8_t direction)
 	while(!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_MODE_SELECT)){
 		timeOut++;
 		if( timeOut > MAX_TIMEOUTCOUNT ){
-			i2c_printf("i2c TimeOut start em\r\n");
+			//i2c_printf("i2c TimeOut start em\r\n");
 			return;
 		}
 	} 
@@ -59,7 +59,7 @@ void I2C_start(I2C_TypeDef* I2Cx, uint8_t address, uint8_t direction)
 		while(!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_TRANSMITTER_MODE_SELECTED)){
 			timeOut++;
 			if( timeOut > MAX_TIMEOUTCOUNT ){
-				i2c_printf("i2c TimeOut tr\r\n");
+				//i2c_printf("i2c TimeOut tr\r\n");
 				return;
 		}
 		} 
@@ -69,7 +69,7 @@ void I2C_start(I2C_TypeDef* I2Cx, uint8_t address, uint8_t direction)
 		while(!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_RECEIVER_MODE_SELECTED)){
 			timeOut++;
 			if( timeOut > MAX_TIMEOUTCOUNT ){
-				i2c_printf("i2c TimeOut re\r\n");
+				//i2c_printf("i2c TimeOut re\r\n");
 				return;
 			}
 		} 
@@ -83,7 +83,7 @@ void I2C_write(I2C_TypeDef* I2Cx, uint8_t data)
 	while(!I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_BYTE_TRANSMITTED)){
 		timeOut++;
 		if( timeOut > MAX_TIMEOUTCOUNT ){
-			i2c_printf("i2c TimeOut wr\r\n");
+			//i2c_printf("i2c TimeOut wr\r\n");
 			return;
 		}
 	} 
@@ -97,7 +97,7 @@ uint8_t I2C_read_ack(I2C_TypeDef* I2Cx)
 	while( !I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_BYTE_RECEIVED) ){
 		timeOut++;
 		if( timeOut > MAX_TIMEOUTCOUNT ){
-			i2c_printf("i2c TimeOut rea\r\n");
+			//i2c_printf("i2c TimeOut rea\r\n");
 			return 0;
 		}
 	} 
@@ -114,7 +114,7 @@ uint8_t I2C_read_nack(I2C_TypeDef* I2Cx)
 	while( !I2C_CheckEvent(I2Cx, I2C_EVENT_MASTER_BYTE_RECEIVED) ){
 		timeOut++;
 		if( timeOut > MAX_TIMEOUTCOUNT ){
-			i2c_printf("i2c TimeOut rena\r\n");
+			//i2c_printf("i2c TimeOut rena\r\n");
 			return 0;
 		}
 	} 

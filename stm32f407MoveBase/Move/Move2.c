@@ -75,12 +75,12 @@ void CMove2_start( CMove2_parameter* CMove2_para )
 //	TIM_Cmd(TIM5, ENABLE);
 //	TIM_Cmd(TIM4, ENABLE);
 	//Œª÷√ªª¡À
-	CMove2_setv( CMove2_para, 0, 0, 0 );
+
 	for (int i = 0; i < m_MOTOR_NUM; i++) {
 		CMotorDC_enableit( &CMove2_para->m_motor[i], true );
 		CMotorDC_breakit( &CMove2_para->m_motor[i], false );
 	}
-	
+	CMove2_setv( CMove2_para, 0, 0, 0 );
 }
 
 void CMove2_stop( CMove2_parameter* CMove2_para )

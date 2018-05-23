@@ -191,7 +191,7 @@ void CAutoCharge_loop( CAutoCharge_parameter* CAutoCharge_para, int *nCmdOp, con
 		case charge_waitShutdown:
 			if( millis() - CAutoCharge_para->m_sytemTime > m_WaitShutDownTime ){
 				//digitalWrite(LED_KEY, LOW);//关闭led
-				pinDigitalWrite(&m_PowerRelay, false);//关闭固态继电器
+//				pinDigitalWrite(&m_PowerRelay, false);//关闭固态继电器
 				UP_ON_OFF = false;//关机标志位变为false
 				CAutoCharge_para->m_chargeState = charge_gotoWork;
 				CAutoCharge_para->m_sytemTime = millis();
@@ -201,11 +201,11 @@ void CAutoCharge_loop( CAutoCharge_parameter* CAutoCharge_para, int *nCmdOp, con
 			if( COBD_getStableVol(&MoveBase.m_obd) > (float)29 ){//Vol > 29 ){
 				CAutoCharge_para->m_sytemTime = millis();
 				pinDigitalWrite( &m_Relay_AC, !m_AC_CHARGE );
-				pinDigitalWrite(&m_PowerRelay, true);//充电完成打开总继电器
+//				pinDigitalWrite(&m_PowerRelay, true);//充电完成打开总继电器
 				CMove2_start(&MoveBase.m_move);
 				CMove2_setv( &MoveBase.m_move, 100, 0, 0 );
 				while( millis() - CAutoCharge_para->m_sytemTime < 1000 )
-					CSonar_loop(&MoveBase.m_sonar,0,0,0);
+					//CSonar_loop(&MoveBase.m_sonar,0,0,0);
 				CMove2_setv( &MoveBase.m_move, 0, 0, 0 );
 				CAutoCharge_stop(CAutoCharge_para);
 				UP_ON_OFF = true;

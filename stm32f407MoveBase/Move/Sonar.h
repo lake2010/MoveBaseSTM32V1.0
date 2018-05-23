@@ -43,7 +43,7 @@ typedef struct CSonar_parameter_all
 }CSonar_parameter;
 
 void CSonar_setup( CSonar_parameter* CSonar_para );
-void CSonar_loop( CSonar_parameter* CSonar_para, int nCmdOp, const int* pParam, int nParamNum );
+void CSonar_loop( CSonar_parameter* CSonar_para);
 int CSonar_getEvent( CSonar_parameter* CSonar_para );
 int CSonar_getWarning( CSonar_parameter* CSonar_para, unsigned int *m_minDis );
 

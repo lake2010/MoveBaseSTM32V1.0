@@ -27,7 +27,6 @@ Gpio_pin_parameter m_Relay_AC;
 
 Gpio_pin_parameter m_Startup_Port;
 
-Gpio_pin_parameter m_PowerRelay;
 
 Gpio_pin_parameter m_SoftStop_key;
 
@@ -44,27 +43,34 @@ Gpio_pin_parameter m_Elevator_DOWN_Limit;
 
 Gpio_pin_parameter m_LED_Port;
 Gpio_pin_parameter m_B_STOP; //抱死
-
+Gpio_pin_parameter m_5VControl;
+Gpio_pin_parameter m_12VControl;
+Gpio_pin_parameter m_24VControl;
+Gpio_pin_parameter m_BellControl;
+//m_PowerRelay
 //off on state
 boolean UP_ON_OFF;
+uint16_t m_WHEEL_R =68 ;
+uint16_t m_WHEEL_D =350 ;
 
 void MoveBasePinDefine(void)
 {
 	//左 电机引脚
-	m_FR_Port_L.m_gpio = GPIOE;
+	m_FR_Port_L.m_gpio = GPIOE; //方向
 	m_FR_Port_L.m_pin  = GPIO_Pin_9;
 
-	m_SV_Port_L.m_gpio = GPIOA;
+	m_SV_Port_L.m_gpio = GPIOA; //speed PWM
 	m_SV_Port_L.m_pin  = GPIO_Pin_2;
 
-	m_EN_Port_L.m_gpio = GPIOE;
+	m_EN_Port_L.m_gpio = GPIOE;//使能
 	m_EN_Port_L.m_pin  = GPIO_Pin_7;
 
-	m_BK_Port_L.m_gpio = GPIOB;
+	m_BK_Port_L.m_gpio = GPIOB;//抱死
 	m_BK_Port_L.m_pin  = GPIO_Pin_1;
 
-	m_PG_Port_L.m_gpio = GPIOA;
+	m_PG_Port_L.m_gpio = GPIOC;//外部中断
 	m_PG_Port_L.m_pin  = GPIO_Pin_0;
+	
 
 	//右 电机引脚
 	m_FR_Port_R.m_gpio = GPIOE;
@@ -74,30 +80,31 @@ void MoveBasePinDefine(void)
 	m_SV_Port_R.m_pin  = GPIO_Pin_12;
 
 	m_EN_Port_R.m_gpio = GPIOB;
-	m_EN_Port_R.m_pin  = GPIO_Pin_2;
+	m_EN_Port_R.m_pin  = GPIO_Pin_5;
 
 	m_BK_Port_R.m_gpio = GPIOB;
 	m_BK_Port_R.m_pin  = GPIO_Pin_0;
 
 	m_PG_Port_R.m_gpio = GPIOC;
-	m_PG_Port_R.m_pin  = GPIO_Pin_6;
-
-	//IR自动充电 IR引脚
-	m_IR_Port_L.m_gpio = GPIOE;
-	m_IR_Port_L.m_pin  = GPIO_Pin_14;
-	m_IR_Port_R.m_gpio = GPIOE;
-	m_IR_Port_R.m_pin  = GPIO_Pin_12;
-	//自动充电 继电器引脚
-	m_Relay_AC.m_gpio = GPIOE;
-	m_Relay_AC.m_pin  = GPIO_Pin_10;
+	m_PG_Port_R.m_pin  = GPIO_Pin_1;
 
 	//开关机引脚
 	m_Startup_Port.m_gpio = GPIOB;
 	m_Startup_Port.m_pin  = GPIO_Pin_12;
 
-	//总电源 继电器
-	m_PowerRelay.m_gpio = GPIOE;
-	m_PowerRelay.m_pin  = GPIO_Pin_3;
+	//PROFET_IN 24v电源控制
+
+	//激光5V/12V 电机24V 主机12V
+	m_5VControl.m_gpio = GPIOD;
+	m_5VControl.m_pin = GPIO_Pin_14;
+	m_12VControl.m_gpio = GPIOD;
+	m_12VControl.m_pin = GPIO_Pin_15;
+	m_24VControl.m_gpio = GPIOE;
+	m_24VControl.m_pin  = GPIO_Pin_3;	
+	
+	m_BellControl.m_gpio = GPIOE;
+	m_BellControl.m_pin = GPIO_Pin_6;
+	
 
 	//软停止按键
 	m_SoftStop_key.m_gpio = GPIOB;
@@ -111,7 +118,7 @@ void MoveBasePinDefine(void)
 	m_Elect_Pin.m_gpio = GPIOA;
 	m_Elect_Pin.m_pin  = GPIO_Pin_7;
 
-//	//电压传感器接口 外部中断
+//	//电压传感器接口 
 	m_Voltage_Pin.m_gpio = GPIOC;
 	m_Voltage_Pin.m_pin  = GPIO_Pin_4;
 	//抱死开关
@@ -578,9 +585,7 @@ void mySystem_init(void)
 {
 
 	RCC_SystemClkInit();
-	//exit interrupt init
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);
-	//systick init
 	Delay_Init();
 	ConfigClass_USART1Init(9600);
 	ConfigClass_USART3Init(9600);

@@ -20,6 +20,7 @@
 // TODO END
 
 #include "LED.h"
+#include "CAN.h"
 
 //#define _MOVEBASE_DEBUG
 //#ifdef _MOVEBASE_DEBUG
@@ -48,6 +49,7 @@ typedef struct CMoveBase_parameter_all
 {
 	CMySerial_parameter		m_ccm; //串口4接收发送指令
 	CMySerial_parameter		m_ccm3;//串口3接收发送指令
+	CCAN_parameter				m_canccm;
 	CCmd_param				m_cmd;//message 老协议形式
 	CMove2_parameter		m_move;//two motor
 	CODO2PG_parameter		m_odo;//odo message
@@ -63,7 +65,9 @@ typedef struct CMoveBase_parameter_all
 	int 					getcmd_state;
 	int 					getCoff_state;//获取上位机充电下发的充电指令状态
 	int						softLocking_state;
-	//uint16_t 				SYSstatus;
+	int 					getStartUpCmdTime;
+	uint16_t 			timeToOn;
+	uint32_t			timeToOff;
 }CMoveBase_parameter;
 
 

@@ -6,12 +6,13 @@
 //#define m_MAX_FREQUWNCY	4000000
 
 //#define m_MAX_SPEED_FRE	600000
+extern uint16_t m_PROPORTION;
 
 #define m_MAX_FREQUWNCY	10500000
 
 #define m_MAX_SPEED_FRE	125000
 #define m_MAX_RPM		3000////3000L * 5/4;
-#define m_PROPORTION	50
+
 #define m_FOREWARD		HIGH
 #define m_ENABLE		LOW
 #define m_BREAK			LOW

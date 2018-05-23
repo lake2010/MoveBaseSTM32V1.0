@@ -53,8 +53,8 @@ void add_num_to_str_int( char* str, long x );
 void add_num_to_str_float( char* str, float x );
 
 //Car_parameter
-#define m_WHEEL_R     60//120/2; // mm, ban jing
-#define m_WHEEL_D     386//386; // mm, di pan
+extern uint16_t m_WHEEL_R ;
+extern uint16_t m_WHEEL_D ;
 
 //off on state
 extern boolean UP_ON_OFF;
@@ -85,7 +85,7 @@ extern Gpio_pin_parameter m_Relay_AC;
 
 extern Gpio_pin_parameter m_Startup_Port;
 
-extern Gpio_pin_parameter m_PowerRelay;
+//extern Gpio_pin_parameter m_PowerRelay;
 
 extern Gpio_pin_parameter m_SoftStop_key;
 
@@ -102,6 +102,10 @@ extern Gpio_pin_parameter m_Elevator_DOWN_Limit;
 
 extern Gpio_pin_parameter m_LED_Port;
 extern Gpio_pin_parameter m_B_STOP;
+extern Gpio_pin_parameter m_5VControl;
+extern Gpio_pin_parameter m_12VControl;
+extern Gpio_pin_parameter m_24VControl;
+extern Gpio_pin_parameter m_BellControl;
 
 void MoveBasePinDefine(void);
 void pinInputModeInit(Gpio_pin_parameter* Gpio_pin_para);
