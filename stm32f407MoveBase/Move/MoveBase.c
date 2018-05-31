@@ -61,7 +61,6 @@ void CMoveBase_softStop(CMoveBase_parameter* CMoveBase_para)
 	if( pinDigitalRead(&m_SoftStop_key) == LOW ){
 		delay(10);
 		if( pinDigitalRead(&m_SoftStop_key) == LOW ){
-		//	myprintfUSART1("softLOW\r\n");
 			CMove2_stop(&CMoveBase_para->m_move);
 			CMove2_setv(&CMoveBase_para->m_move, 0, 0, 0);
 			setbit(CMoveBase_para->m_SYSstatus.Sys_status,0);
@@ -73,9 +72,7 @@ void CMoveBase_softStop(CMoveBase_parameter* CMoveBase_para)
 		clrbit(CMoveBase_para->m_SYSstatus.Sys_status,0);
 		if( CMoveBase_para->softstop_state != 0 ){
 			CMove2_start(&CMoveBase_para->m_move);
-		//	CMove2_setv(&CMoveBase_para->m_move, 0, 0, 0);
 			CMoveBase_para->softstop_state = 0;	
-			//myprintf("HIGH\r\n");
 		}
 	}
 }
@@ -156,10 +153,9 @@ void CMoveBase_USART4Read(CMoveBase_parameter* CMoveBase_para)
 				{
 					m_WHEEL_D =((uint16_t)buf[4]<<8)+buf[5];//轮中心距
 					m_WHEEL_R= ((uint16_t)buf[6]<<8)+buf[7];//轮半径
-					m_PROPORTION=(((uint16_t)buf[8]<<8)+buf[9])*100;//减速比
+					m_PROPORTION=(((uint16_t)buf[8]<<8)+buf[9]);//减速比
 					if(m_PROPORTION < 50) m_PROPORTION = 50;
 				}
-				myprintfUSART1("WHEEL:%d,%d,%d",m_WHEEL_D,m_WHEEL_R,m_PROPORTION);
 				setbit(CMoveBase_para->m_SYSstatus.Sys_status,1);//握手
 				CMove2_start(&CMoveBase_para->m_move);
 				break;
@@ -170,7 +166,6 @@ void CMoveBase_USART4Read(CMoveBase_parameter* CMoveBase_para)
 							((int16_t)buf[7]);
 				pParam[2] = ((int16_t)buf[8]<<8)   |
 							((int16_t)buf[9]);
-//				myprintfUSART1("%d,%d,%d\r\n",pParam[0],pParam[1],pParam[2]);
 				CMove2_setv( &CMoveBase_para->m_move, pParam[0],pParam[1],pParam[2]);				
 				break;
 			case CMD_OP_STOP: /* 电机停止运动（电机停止后，保持使能,但可被转动） */	
@@ -186,7 +181,6 @@ void CMoveBase_USART4Read(CMoveBase_parameter* CMoveBase_para)
 				mySerialWriteUSART3((byte*)buf,len);
 				CMoveBase_para->getCoff_state = 0;
 			  CMove2_start(&CMoveBase_para->m_move);
-//			  CMove2_setv( &CMoveBase_para->m_move,0,0,0);	
 				break;
 			case CMD_OP_COFF_ON:
 				CMove2_enableCoff( &CMoveBase_para->m_move, 1 );
@@ -236,7 +230,6 @@ void CMoveBase_USART3Read(CMoveBase_parameter* CMoveBase_para)
 			case CMD_OP_START:
 				setbit(CMoveBase_para->m_SYSstatus.Sys_status,1);//握手
 				CMove2_start(&CMoveBase_para->m_move);
-//				CMove2_setv( &CMoveBase_para->m_move,0,0,0);
 				break;
 			case CMD_OP_SET_V:	
 				pParam[0] = ((int16_t)buf[4]<<8)   |
@@ -252,9 +245,6 @@ void CMoveBase_USART3Read(CMoveBase_parameter* CMoveBase_para)
 				break;
 			case CMD_OP_AC_OFF:
 				CMove2_enableCoff( &CMoveBase_para->m_move, 0 );						
-//				CMove2_start(&CMoveBase_para->m_move);
-//				delay(1000);
-//			  CMove2_setv( &CMoveBase_para->m_move,0,0,0);	
 				CMoveBase_para->getCoff_state = 0;
 			case CMD_OP_COFF_ON:
 				CMove2_enableCoff( &CMoveBase_para->m_move, 1 );
@@ -310,7 +300,6 @@ void CMoveBase_USART4ReadOff(CMoveBase_parameter* CMoveBase_para)
 				mySerialWriteUSART3((byte*)buf,len);
 			  CMove2_start(&CMoveBase_para->m_move);
 				CMove2_setv( &CMoveBase_para->m_move,100,0,0);	
-			//临时加 后期需要超声波
 				delay(1000);
 			  CMove2_setv( &CMoveBase_para->m_move,0,0,0);	
 				break;
@@ -327,7 +316,6 @@ void CMoveBase_USART4ReadOff(CMoveBase_parameter* CMoveBase_para)
 
 void CMoveChargeState_loop(CMoveBase_parameter* CMoveBase_para)
 {
-//	myprintfUSART1("%d\r\n",CMoveBase_para->getCoff_state);
 	if(CMoveBase_para->getCoff_state)
 	{
 		CMoveBase_USART4ReadOff(CMoveBase_para);	
@@ -368,7 +356,6 @@ void SYSstatus_printfEncoding(char value1, char value2, char value3, char value4
 		crc ^= buf[i];
 	buf[index++] = crc;
 	mySerialWriteUSART4(buf,index); //主机
-//	mySerialWriteUSART1(buf,index); //主机
 }
 
 void SYSstatus_loop( SYSstatus_parameter* SYSstatus_para )
@@ -405,7 +392,7 @@ void SYSstatus_loop( SYSstatus_parameter* SYSstatus_para )
 	}
 }
 
-//抱死开关 1表示抱死
+//抱死开关 1表示抱死，抱死
 void CMoveBase_softLocking(CMoveBase_parameter* CMoveBase_para)
 {
 		if(pinDigitalRead(&m_B_STOP) == LOW)
@@ -422,7 +409,6 @@ void CMoveBase_softLocking(CMoveBase_parameter* CMoveBase_para)
 				clrbit(CMoveBase_para->m_SYSstatus.Sys_status,4);
 				CMoveBase_para->softLocking_state = 0;
 		}
-		//myprintfUSART1("Status:%x\r\n",CMoveBase_para->m_SYSstatus.Sys_status);
 }
 
 //运动控制板只相应动作指令

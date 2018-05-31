@@ -42,26 +42,18 @@ void CSonar_loop( CSonar_parameter* CSonar_para)
 {
 	char*    buf = 0;
 	int      len;
-	int16_t pParam[3];
 	if( CMySerial_getCmd_reeman(&MoveBase.m_canccm.Can_ccm, &buf, &len) ){
 		unsigned char crc = 0;
 		for( int i = 2; i < (len-1); i++ ){
 			crc ^=buf[i];
 		}	
-		//myprintfUSART1("%x\r\n",crc);
 		if( crc != buf[len-1] )
 			return;
 		switch(buf[3])
 		{
 			case CMD_OP_SONAR_DATA:		
-				pParam[0] = ((int16_t)buf[4]<<8)   |
-							((int16_t)buf[5]);
-				pParam[1] = ((int16_t)buf[6]<<8)   |
-							((int16_t)buf[7]);
-				pParam[2] = ((int16_t)buf[8]<<8)   |
-							((int16_t)buf[9]);
-				myprintfUSART1("%d,%d,%d\r\n",pParam[0],pParam[1],pParam[2]);
-				mySerialWriteUSART4((byte *)buf,len);				
+				mySerialWriteUSART4((byte *)buf,len);	
+				myprintfUSART1("%d,%d,%d\r\n",((uint16_t)buf[4]<<8)+buf[5],((uint16_t)buf[6]<<8)+buf[7],((uint16_t)buf[8]<<8)+buf[9]);
 				break;
 		}
 	}
